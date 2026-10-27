@@ -1,0 +1,16 @@
+# render.yaml — Render deployment config for A7 Agrovet QR Portal
+# Docs: https://render.com/docs/yaml-spec
+
+services:
+  - type: web
+    name: a7-agrovet-qr-portal
+    runtime: node
+    rootDir: a7-qr-code          # project lives in this subfolder of the main repo
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
