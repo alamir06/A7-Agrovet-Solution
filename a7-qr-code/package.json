@@ -1,0 +1,24 @@
+{
+  "name": "a7-agrovet-social-qr-portal",
+  "version": "1.0.0",
+  "description": "A7 Agrovet Solution - Unified Social Media QR Code Invitation Portal",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "generate-qr": "node generate_qr.mjs",
+    "generate-qr:prod": "node generate_qr.mjs https://yourdomain.com"
+  },
+  "author": "A7 Agrovet Solution",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "jimp": "^1.6.1",
+    "morgan": "^1.10.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

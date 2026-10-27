@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A7 Agrovet Solution - Social Media QR Portal Design & Workflow Presentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+  
+  :root {
+    --logo-navy: #143C78;          /* Official Veterinary Navy */
+    --logo-navy-dark: #142864;     /* Midnight Navy */
+    --logo-green: #50A014;         /* Official Agro Green */
+    --logo-green-light: #F0F9EB;   /* Soft Green Tint */
+    --logo-lime: #78B428;          /* Growth Lime Highlight */
+    --brand-orange: #E65100;       /* Trust Orange Accent */
+    --brand-orange-light: #FFF3E0; /* Soft Orange Tint */
+    
+    --dark: #0F172A;
+    --muted: #475569;
+    --bg-page: #F1F5F9;
+    --card-bg: #FFFFFF;
+    --border: #E2E8F0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', 'Ebrima', 'Nyala', sans-serif;
+    background: var(--bg-page);
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  /* Printable A4 Page Structure */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  .print-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .print-btn {
+    background: var(--logo-navy);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+  }
+  .print-btn:hover { background: var(--logo-navy-dark); }
+  
+  @media print {
+    .print-controls { display: none !important; }
+    body { background: white; }
+    .page {
+      box-shadow: none !important;
+      margin: 0 !important;
+      page-break-after: always;
+      width: 100% !important;
+      min-height: 100vh !important;
+    }
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 24px auto;
+    background: white;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.08);
+    position: relative;
+    padding: 24mm 18mm 20mm 18mm;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header Banner */
+  .page-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20mm;
+    background: linear-gradient(135deg, var(--logo-navy), var(--logo-navy-dark));
+    border-bottom: 4px solid var(--logo-green);
+    padding: 0 18mm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+  }
+  .page-header .brand-title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+  }
+  .page-header .brand-sub {
+    font-size: 11px;
+    opacity: 0.9;
+  }
+  .page-header .brand-motto-tag {
+    text-align: right;
+  }
+  .page-header .motto-amharic {
+    font-family: 'Nyala', 'Ebrima', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--logo-lime);
+  }
+  .page-header .motto-eng {
+    font-size: 10px;
+    opacity: 0.9;
+  }
+
+  /* Footer */
+  .page-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 14mm;
+    padding: 0 18mm;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .banner-box {
+    background: var(--logo-green-light);
+    border-left: 5px solid var(--logo-green);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+  }
+  .banner-box h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--logo-navy);
+    margin-bottom: 4px;
+  }
+  .banner-box p {
+    font-size: 11px;
+    color: var(--dark);
+    line-height: 1.45;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--logo-navy);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Key-Value Pairs */
+  .prop-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    padding: 4px 0;
+    border-bottom: 1px dashed #EDF2F7;
+  }
+  .prop-label { font-weight: 600; color: var(--muted); }
+  .prop-val { font-weight: 700; color: var(--dark); text-align: right; }
+  .prop-val.amharic { font-family: 'Nyala', 'Ebrima', sans-serif; color: var(--logo-green); font-size: 12px; }
+
+  /* Palette chips */
+  .palette-strip {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .chip {
+    flex: 1;
+    border-radius: 6px;
+    padding: 6px;
+    text-align: center;
+    color: white;
+    font-size: 8.5px;
+    font-weight: 700;
+  }
+
+  /* Workflow Steps */
+  .workflow-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .wf-step {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .wf-num {
+    width: 22px;
+    height: 22px;
+    background: var(--logo-navy);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .wf-content h4 { font-size: 11px; font-weight: 700; color: var(--dark); }
+  .wf-content p { font-size: 9.5px; color: var(--muted); line-height: 1.35; }
+
+  /* Table */
+  table.channel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    margin-top: 6px;
+  }
+  table.channel-table th {
+    background: var(--logo-green-light);
+    color: var(--logo-navy);
+    font-weight: 700;
+    text-align: left;
+    padding: 6px 10px;
+  }
+  table.channel-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #EDF2F7;
+  }
+  .tag-btn {
+    background: var(--logo-green-light);
+    color: var(--logo-green);
+    border: 1px solid var(--logo-green);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 9px;
+    display: inline-block;
+  }
+
+  /* Smartphone Mockup */
+  .mockup-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .phone-frame {
+    width: 230px;
+    background: #0F172A;
+    border-radius: 36px;
+    padding: 10px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    flex-shrink: 0;
+  }
+  .phone-screen {
+    background: #F8FAFC;
+    border-radius: 28px;
+    overflow: hidden;
+    padding: 10px;
+    font-size: 9px;
+  }
+  .phone-notch {
+    width: 70px;
+    height: 14px;
+    background: #0F172A;
+    border-radius: 8px;
+    margin: 0 auto 6px auto;
+  }
+  .phone-header {
+    background: linear-gradient(135deg, var(--logo-navy), var(--logo-navy-dark));
+    color: white;
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border-bottom: 3px solid var(--logo-green);
+  }
+  .phone-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--logo-lime);
+    margin: 0 auto 4px auto;
+    object-fit: cover;
+    display: block;
+    background: white;
+  }
+  .phone-brand-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+  }
+  .phone-motto {
+    font-family: 'Nyala', 'Ebrima', sans-serif;
+    background: var(--logo-green);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 8.5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 3px;
+  }
+  .phone-card {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .phone-card-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .phone-card-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .phone-card-text h5 { font-size: 8.5px; font-weight: 700; color: var(--dark); line-height: 1.1; }
+  .phone-card-text p { font-size: 6.5px; color: var(--muted); }
+  .phone-action-btn {
+    background: var(--logo-navy);
+    color: white;
+    font-size: 7px;
+    font-weight: 700;
+    padding: 4px 7px;
+    border-radius: 12px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .phone-action-btn.agro { background: var(--logo-green); }
+
+  /* Standee Mockup */
+  .standee-card {
+    width: 230px;
+    border: 2px solid var(--logo-navy);
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
+    background: white;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+  .standee-header {
+    background: linear-gradient(135deg, var(--logo-navy), var(--logo-navy-dark));
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-bottom: 3px solid var(--logo-green);
+  }
+  .standee-qr {
+    width: 140px;
+    height: 140px;
+    margin: 8px auto;
+    border: 2px solid var(--logo-green);
+    border-radius: 10px;
+    padding: 6px;
+    background: white;
+  }
+  .standee-scan-badge {
+    background: var(--logo-green);
+    color: white;
+    font-size: 8.5px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    margin: 6px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="print-controls">
+  <button class="print-btn" onclick="window.print()">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/></svg>
+    Save as PDF / Print Presentation
+  </button>
+</div>
+
+<!-- ================= PAGE 1 ================= -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <div class="brand-title">A7 AGROVET SOLUTION</div>
+      <div class="brand-sub">Social Media QR Portal • Executive Architecture & Workflow</div>
+    </div>
+    <div class="brand-motto-tag">
+      <div class="motto-amharic">የብልህ አርቢዎች ምርጫ!</div>
+      <div class="motto-eng">The Choice of Wise Farmers!</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 14mm;">
+    <div class="banner-box">
+      <h3>Executive Proposal: Unified Digital Community Onboarding</h3>
+      <p>
+        A7 Agrovet Solution is deploying a unified, branded QR code invitation system. Through a single QR code placed on physical packaging, consultation materials, flyers, and counter standees, customers can instantly scan and connect to all official A7 Agrovet channels: <strong>Facebook, YouTube, TikTok, LinkedIn, Instagram, Telegram</strong>, and direct <strong>Veterinary Hotline</strong>.
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <!-- Verified Foundation -->
+      <div class="card">
+        <div class="card-title">1. Official Brand Identity & Core Values</div>
+        <div class="prop-row"><span class="prop-label">Brand Name</span><span class="prop-val">A7 Agrovet Solution</span></div>
+        <div class="prop-row"><span class="prop-label">Motto / Slogan</span><span class="prop-val amharic">የብልህ አርቢዎች ምርጫ!</span></div>
+        <div class="prop-row"><span class="prop-label">English Slogan</span><span class="prop-val">The Choice of Wise Farmers!</span></div>
+        <div class="prop-row"><span class="prop-label">Specialization</span><span class="prop-val">Poultry, Veterinary, Consultant</span></div>
+        <div class="prop-row"><span class="prop-label">Business Email</span><span class="prop-val">A7AgrovetSolution1@gmail.com</span></div>
+        <div class="prop-row"><span class="prop-label">Direct Phone</span><span class="prop-val">+251 958 315 812</span></div>
+        
+        <div style="margin-top: 10px; font-size: 10.5px; font-weight: 700; color: var(--muted);">Official Brand Palette:</div>
+        <div class="palette-strip">
+          <div class="chip" style="background: #143C78;">Veterinary Navy<br>#143C78</div>
+          <div class="chip" style="background: #50A014;">Agro Green<br>#50A014</div>
+          <div class="chip" style="background: #78B428;">Growth Lime<br>#78B428</div>
+          <div class="chip" style="background: #E65100;">Trust Orange<br>#E65100</div>
+        </div>
+      </div>
+
+      <!-- End-to-End Workflow -->
+      <div class="card">
+        <div class="card-title">2. End-to-End Customer Workflow</div>
+        <div class="workflow-list">
+          <div class="wf-step">
+            <div class="wf-num">1</div>
+            <div class="wf-content">
+              <h4>Customer Scans Branded QR Code</h4>
+              <p>User points camera at counter standee, training brochure, or egg/feed packaging.</p>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-num" style="background: var(--logo-green);">2</div>
+            <div class="wf-content">
+              <h4>Mobile Invitation Hub Opens (< 1 sec)</h4>
+              <p>Displays A7 circular logo, official motto in Amharic, and welcome greeting.</p>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-num" style="background: var(--brand-orange);">3</div>
+            <div class="wf-content">
+              <h4>1-Tap Smart Deep-Linking</h4>
+              <p>Directly launches native Facebook, YouTube, TikTok, Telegram, or Instagram app.</p>
+            </div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-num" style="background: var(--logo-navy-dark);">4</div>
+            <div class="wf-content">
+              <h4>Instant Community Join & Follow</h4>
+              <p>Customer follows without typing passwords or searching usernames manually.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Channels Matrix -->
+    <div class="card">
+      <div class="card-title">3. Official Social Channels & Bilingual Action Triggers</div>
+      <table class="channel-table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Account Handle</th>
+            <th>Bilingual Action Button</th>
+            <th>Strategic Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Facebook</strong></td>
+            <td>A7 Agrovet solution</td>
+            <td><span class="tag-btn">ይከተሉ / Follow Page</span></td>
+            <td>Long-form educational articles, daily updates & farmer community</td>
+          </tr>
+          <tr>
+            <td><strong>YouTube</strong></td>
+            <td>A7 agrovet solution</td>
+            <td><span class="tag-btn" style="background:#FFEBEE; color:#C62828; border-color:#FFCDD2;">ሰብስክራይብ / Subscribe</span></td>
+            <td>Comprehensive poultry training videos, farm tours & clinical tutorials</td>
+          </tr>
+          <tr>
+            <td><strong>TikTok</strong></td>
+            <td>A7 agrovet solution</td>
+            <td><span class="tag-btn" style="background:#F1F5F9; color:#0F172A; border-color:#CBD5E1;">ይከተሉ / Follow</span></td>
+            <td>Fast poultry farming tips, vaccination reminders & short video reels</td>
+          </tr>
+          <tr>
+            <td><strong>Instagram</strong></td>
+            <td>A7 Agrovet Solution</td>
+            <td><span class="tag-btn" style="background:#FCE4EC; color:#C2185B; border-color:#F8BBD0;">ይከተሉ / Follow</span></td>
+            <td>High-quality breed photography, farm management infographics & carousels</td>
+          </tr>
+          <tr>
+            <td><strong>LinkedIn</strong></td>
+            <td>A7 Agrovet Solution</td>
+            <td><span class="tag-btn" style="background:#E3F2FD; color:#1565C0; border-color:#BBDEFB;">ይገናኙ / Connect</span></td>
+            <td>B2B veterinary consulting, agricultural investment & partnerships</td>
+          </tr>
+          <tr>
+            <td><strong>Telegram</strong></td>
+            <td>A7 Agrovet Community</td>
+            <td><span class="tag-btn" style="background:#E1F5FE; color:#0288D1; border-color:#B3E5FC;">ይቀላቀሉ / Join Channel</span></td>
+            <td>Direct broadcasts, feed price updates & instant farmer advisory alerts</td>
+          </tr>
+          <tr>
+            <td><strong>Phone / WA</strong></td>
+            <td>+251 958 315 812</td>
+            <td><span class="tag-btn" style="background:var(--logo-green-light); color:var(--logo-green); border-color:var(--logo-green);">ይደውሉ / Direct Call</span></td>
+            <td>Direct veterinary inquiries, poultry medication & urgent support</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>A7 Agrovet Solution • Social Media QR Portal Design Proposal</span>
+    <span>Page 1 of 3</span>
+  </div>
+</div>
+
+<!-- ================= PAGE 2 ================= -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <div class="brand-title">A7 AGROVET SOLUTION</div>
+      <div class="brand-sub">Mobile Landing Page UI & Smart Deep-Linking Architecture</div>
+    </div>
+    <div class="brand-motto-tag">
+      <div class="motto-amharic">የብልህ አርቢዎች ምርጫ!</div>
+      <div class="motto-eng">The Choice of Wise Farmers!</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 14mm;">
+    <div class="mockup-container">
+      <!-- Smartphone Mockup -->
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          
+          <div class="phone-header">
+            <img src="assets/logo.jpg" alt="A7 Logo" class="phone-logo" onerror="this.src='../Brand Information/Logo.jpg'">
+            <div class="phone-brand-title">A7 AGROVET SOLUTION</div>
+            <div class="phone-motto">የብልህ አርቢዎች ምርጫ!</div>
+            <div style="font-size: 7px; opacity: 0.85; margin-top: 2px;">The Choice of Wise Farmers!</div>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 8px;">
+            <div style="font-size: 8px; font-weight: 800; color: var(--dark);">Official Community Invitation</div>
+            <div style="font-size: 6.5px; color: var(--muted);">Select a channel to join our growing community</div>
+          </div>
+
+          <!-- Channel 1: Facebook -->
+          <div class="phone-card">
+            <div class="phone-card-left">
+              <div class="phone-card-icon" style="background: #1877F2;">f</div>
+              <div class="phone-card-text">
+                <h5>Facebook</h5>
+                <p>A7 Agrovet solution</p>
+              </div>
+            </div>
+            <a class="phone-action-btn">ይከተሉ / Follow</a>
+          </div>
+
+          <!-- Channel 2: YouTube -->
+          <div class="phone-card">
+            <div class="phone-card-left">
+              <div class="phone-card-icon" style="background: #FF0000;">▶</div>
+              <div class="phone-card-text">
+                <h5>YouTube</h5>
+                <p>A7 agrovet solution</p>
+              </div>
+            </div>
+            <a class="phone-action-btn" style="background: #FF0000;">Subscribe</a>
+          </div>
+
+          <!-- Channel 3: TikTok -->
+          <div class="phone-card">
+            <div class="phone-card-left">
+              <div class="phone-card-icon" style="background: #000000;">🎵</div>
+              <div class="phone-card-text">
+                <h5>TikTok</h5>
+                <p>A7 agrovet solution</p>
+              </div>
+            </div>
+            <a class="phone-action-btn" style="background: #000000;">ይከተሉ / Follow</a>
+          </div>
+
+          <!-- Channel 4: Instagram -->
+          <div class="phone-card">
+            <div class="phone-card-left">
+              <div class="phone-card-icon" style="background: #E4405F;">📷</div>
+              <div class="phone-card-text">
+                <h5>Instagram</h5>
+                <p>A7 Agrovet Solution</p>
+              </div>
+            </div>
+            <a class="phone-action-btn" style="background: #E4405F;">ይከተሉ / Follow</a>
+          </div>
+
+          <!-- Channel 5: LinkedIn -->
+          <div class="phone-card">
+            <div class="phone-card-left">
+              <div class="phone-card-icon" style="background: #0A66C2;">in</div>
+              <div class="phone-card-text">
+                <h5>LinkedIn</h5>
+                <p>A7 Agrovet Solution</p>
+              </div>
+            </div>
+            <a class="phone-action-btn" style="background: #0A66C2;">ይገናኙ / Connect</a>
+          </div>
+
+          <!-- Channel 6: Telegram -->
+          <div class="phone-card">
+            <div class="phone-card-left">
+              <div class="phone-card-icon" style="background: #229ED9;">✈</div>
+              <div class="phone-card-text">
+                <h5>Telegram</h5>
+                <p>A7 Agrovet Community</p>
+              </div>
+            </div>
+            <a class="phone-action-btn" style="background: #229ED9;">ይቀላቀሉ / Join</a>
+          </div>
+
+          <!-- Channel 7: Direct Call -->
+          <div class="phone-card" style="border-color: #A7F3D0; background: #F0FDF4;">
+            <div class="phone-card-left">
+              <div class="phone-card-icon" style="background: var(--logo-green);">📞</div>
+              <div class="phone-card-text">
+                <h5>Call / WhatsApp</h5>
+                <p>+251 958 315 812</p>
+              </div>
+            </div>
+            <a class="phone-action-btn agro">ይደውሉ / Call</a>
+          </div>
+
+          <div style="text-align: center; font-size: 6px; color: var(--muted); margin-top: 6px;">
+            A7AgrovetSolution1@gmail.com • Veterinary & Poultry Consultant
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column explanation -->
+      <div style="flex: 1;">
+        <div class="card" style="margin-bottom: 14px;">
+          <div class="card-title">Key UI / UX Architecture Highlights</div>
+          <ul style="font-size: 11px; color: var(--dark); padding-left: 16px; line-height: 1.6;">
+            <li><strong>Official Brand Harmony:</strong> Authentic A7 veterinary navy and agriculture green styling creates an authoritative, trustworthy brand presence.</li>
+            <li><strong>Touch-Optimized Hierarchy:</strong> Clean, distinct platform cards with high-contrast color badges to ensure instant recognition in outdoor farm lighting.</li>
+            <li><strong>Bilingual Presentation:</strong> Seamless combination of the Amharic slogan <em>"የብልህ አርቢዎች ምርጫ!"</em> with standard international branding.</li>
+            <li><strong>Ultra-Lightweight Codebase:</strong> Pure HTML5 & CSS without heavy JavaScript frameworks ensures sub-second page loads even on 3G farm connections.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Why Smart Deep-Linking is Essential</div>
+          <div style="font-size: 10.5px; color: var(--muted); margin-bottom: 10px;">
+            Standard web links usually open inside the mobile browser where users are <strong>logged out</strong>, resulting in severe drop-off.
+          </div>
+
+          <div class="grid-2" style="margin-bottom: 8px;">
+            <div style="background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 8px; padding: 10px;">
+              <div style="font-size: 10px; font-weight: 800; color: #BE123C; margin-bottom: 4px;">❌ Standard Web Links</div>
+              <div style="font-size: 9px; color: var(--dark); line-height: 1.35;">
+                • Opens in browser<br>
+                • Asks user: "Log in with password"<br>
+                • 70%+ bounce rate without following
+              </div>
+            </div>
+
+            <div style="background: var(--logo-green-light); border: 1px solid var(--logo-green); border-radius: 8px; padding: 10px;">
+              <div style="font-size: 10px; font-weight: 800; color: var(--logo-navy); margin-bottom: 4px;">✔ A7 Smart Deep-Link</div>
+              <div style="font-size: 9px; color: var(--dark); line-height: 1.35;">
+                • Opens native app directly<br>
+                • User is already logged in<br>
+                • 1-tap follow / subscribe / connect!
+              </div>
+            </div>
+          </div>
+
+          <div style="font-size: 10px; font-weight: 700; color: var(--logo-navy); margin-top: 8px;">Implemented Protocol Handlers:</div>
+          <div style="font-size: 9px; color: var(--muted); line-height: 1.45; margin-top: 4px;">
+            • <strong>Facebook:</strong> <code>fb://facewebmodal/f?href=...</code> (Fallback: <code>https://facebook.com/...</code>)<br>
+            • <strong>YouTube:</strong> <code>vnd.youtube://...</code> (Fallback: <code>https://youtube.com/...</code>)<br>
+            • <strong>Instagram:</strong> <code>instagram://user?username=...</code> (Fallback: <code>https://instagram.com/...</code>)<br>
+            • <strong>Telegram:</strong> <code>tg://resolve?domain=...</code> (Fallback: <code>https://t.me/...</code>)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>A7 Agrovet Solution • Social Media QR Portal Design Proposal</span>
+    <span>Page 2 of 3</span>
+  </div>
+</div>
+
+<!-- ================= PAGE 3 ================= -->
+<div class="page">
+  <div class="page-header">
+    <div>
+      <div class="brand-title">A7 AGROVET SOLUTION</div>
+      <div class="brand-sub">Physical Print Collateral & Deployment Specifications</div>
+    </div>
+    <div class="brand-motto-tag">
+      <div class="motto-amharic">የብልህ አርቢዎች ምርጫ!</div>
+      <div class="motto-eng">The Choice of Wise Farmers!</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 14mm;">
+    <div class="mockup-container">
+      <!-- Standee Card -->
+      <div class="standee-card">
+        <div class="standee-header">
+          <img src="assets/logo.jpg" alt="A7 Logo" style="width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 4px auto; display: block; border: 2px solid var(--logo-lime);" onerror="this.src='../Brand Information/Logo.jpg'">
+          <div style="font-size: 11px; font-weight: 800;">A7 AGROVET SOLUTION</div>
+          <div style="font-family: 'Nyala', 'Ebrima', sans-serif; font-size: 10px; color: var(--logo-lime);">የብልህ አርቢዎች ምርጫ!</div>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 800; color: var(--dark);">የA7 Agrovet ቤተሰብ ይሁኑ!</div>
+        <div style="font-size: 8.5px; color: var(--muted);">Scan to Join Our Community</div>
+
+        <div class="standee-qr">
+          <img src="qr_code/a7_social_qr.png" alt="A7 Branded QR Code" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.src='a7_presentation_qr.png'">
+        </div>
+
+        <div class="standee-scan-badge">📷 በስልክዎ ካሜራ ስካን ያድርጉ</div>
+        
+        <div style="font-size: 7.5px; color: var(--dark); font-weight: 700; margin: 4px 0;">
+          Facebook • YouTube • TikTok • Instagram • LinkedIn • Telegram
+        </div>
+
+        <div style="background: var(--logo-green-light); padding: 6px; border-radius: 6px; margin-top: 6px; font-size: 7.5px; color: var(--logo-navy);">
+          <strong>Direct Line:</strong> +251 958 315 812<br>
+          <strong>Email:</strong> A7AgrovetSolution1@gmail.com
+        </div>
+      </div>
+
+      <!-- Right column: Deliverables & Next Steps -->
+      <div style="flex: 1;">
+        <div class="card" style="margin-bottom: 14px;">
+          <div class="card-title">Production Deliverables Package</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; gap: 8px; font-size: 10.5px;">
+              <span style="color: var(--logo-navy); font-weight: 800;">1.</span>
+              <div>
+                <strong>Mobile Web Application (index.html, style.css, app.js):</strong>
+                <p style="font-size: 9.5px; color: var(--muted);">Styled with official Veterinary Navy & Agro Green palette, ready to host immediately.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; font-size: 10.5px;">
+              <span style="color: var(--logo-green); font-weight: 800;">2.</span>
+              <div>
+                <strong>High-Resolution Vector & Print QR Code:</strong>
+                <p style="font-size: 9.5px; color: var(--muted);">300 DPI PNG and scalable SVG in official brand styling with the center A7 emblem.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; font-size: 10.5px;">
+              <span style="color: var(--brand-orange); font-weight: 800;">3.</span>
+              <div>
+                <strong>Printable A5 / Counter Standee Template:</strong>
+                <p style="font-size: 9.5px; color: var(--muted);">Pre-formatted layout for physical printing on PVC, acrylic stands, or cardstock.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; font-size: 10.5px;">
+              <span style="color: var(--dark); font-weight: 800;">4.</span>
+              <div>
+                <strong>Deployment & Handover Guide:</strong>
+                <p style="font-size: 9.5px; color: var(--muted);">Simple instructions for updating social links or pointing to custom domains.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Approval Box -->
+        <div class="card" style="background: var(--logo-green-light); border-color: var(--logo-green);">
+          <div class="card-title" style="color: var(--logo-navy);">Executive Sign-Off & Project Approval</div>
+          <p style="font-size: 10.5px; color: var(--dark); line-height: 1.5; margin-bottom: 12px;">
+            This document outlines the complete visual design, technical protocols, and customer workflow for <strong>A7 Agrovet Solution's Unified Social Media QR Portal</strong>.
+          </p>
+
+          <div style="display: flex; justify-content: space-between; font-size: 10px; margin-top: 14px;">
+            <div>
+              <div style="font-weight: 700; color: var(--dark);">Prepared for:</div>
+              <div style="color: var(--muted);">A7 Agrovet Solution Management</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 700; color: var(--dark);">Project Status:</div>
+              <div style="color: var(--logo-green); font-weight: 800;">Ready for Deployment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>A7 Agrovet Solution • Social Media QR Portal Design Proposal</span>
+    <span>Page 3 of 3</span>
+  </div>
+</div>
+
+</body>
+</html>

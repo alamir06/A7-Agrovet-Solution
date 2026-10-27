@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A7 Agrovet Solution - In-Store QR Standee / Promotional Flyer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap');
+
+  :root {
+    --navy: #143C78;
+    --navy-dark: #142864;
+    --green: #50A014;
+    --lime: #78B428;
+    --orange: #E65100;
+    --dark: #0F172A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', 'Ebrima', 'Nyala', sans-serif;
+    background: #E2E8F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* Printable A5 Card (148mm x 210mm) */
+  @page {
+    size: A5 portrait;
+    margin: 0;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .print-bar { display: none !important; }
+    .flyer { box-shadow: none !important; border: none !important; }
+  }
+
+  .print-bar {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+  }
+  .print-btn {
+    background: var(--navy);
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .flyer {
+    width: 148mm;
+    min-height: 210mm;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid var(--navy);
+  }
+
+  .flyer-header {
+    background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+    color: white;
+    padding: 20px 16px 16px 16px;
+    text-align: center;
+    border-bottom: 5px solid var(--green);
+  }
+
+  .logo-box {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: white;
+    margin: 0 auto 10px auto;
+    padding: 3px;
+    border: 3px solid var(--lime);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  .logo-box img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .flyer-title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .flyer-motto {
+    font-family: 'Nyala', 'Ebrima', sans-serif;
+    color: var(--lime);
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+  .flyer-motto-eng {
+    font-size: 10px;
+    opacity: 0.9;
+  }
+
+  .flyer-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .callout-amharic {
+    font-family: 'Nyala', 'Ebrima', sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .callout-eng {
+    font-size: 11px;
+    color: #475569;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .qr-frame {
+    width: 180px;
+    height: 180px;
+    margin: 14px auto;
+    padding: 10px;
+    background: white;
+    border: 3px solid var(--green);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(80, 160, 20, 0.15);
+  }
+  .qr-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .scan-badge {
+    background: var(--green);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    box-shadow: 0 3px 8px rgba(80, 160, 20, 0.3);
+  }
+
+  .social-strip {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .social-tag {
+    background: #F1F5F9;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #CBD5E1;
+  }
+
+  .flyer-footer {
+    background: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 9.5px;
+    color: #475569;
+    line-height: 1.5;
+  }
+  .flyer-footer strong {
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  <button class="print-btn" onclick="window.print()">Print A5 Standee / Save PDF</button>
+</div>
+
+<div class="flyer">
+  <div class="flyer-header">
+    <div class="logo-box">
+      <img src="../assets/logo.jpg" alt="A7 Logo" onerror="this.src='../../Brand Information/Logo.jpg'">
+    </div>
+    <div class="flyer-title">A7 AGROVET SOLUTION</div>
+    <div class="flyer-motto">የብልህ አርቢዎች ምርጫ!</div>
+    <div class="flyer-motto-eng">The Choice of Wise Farmers!</div>
+  </div>
+
+  <div class="flyer-body">
+    <div class="callout-amharic">የA7 Agrovet ቤተሰብ ይሁኑ!</div>
+    <div class="callout-eng">Scan to Join Our Farmer & Livestock Community</div>
+
+    <div class="qr-frame">
+      <img src="../qr_code/a7_social_qr.png" alt="A7 Branded QR Code" onerror="this.src='../a7_presentation_qr.png'">
+    </div>
+
+    <div class="scan-badge">📷 በስልክዎ ካሜራ ስካን ያድርጉ / Scan with Camera</div>
+
+    <div class="social-strip">
+      <span class="social-tag">Facebook</span>
+      <span class="social-tag">YouTube</span>
+      <span class="social-tag">TikTok</span>
+      <span class="social-tag">Instagram</span>
+      <span class="social-tag">LinkedIn</span>
+      <span class="social-tag">Telegram</span>
+    </div>
+  </div>
+
+  <div class="flyer-footer">
+    <strong>Direct Veterinary Care & Inquiries:</strong> +251 958 315 812<br>
+    <strong>Official Email:</strong> A7AgrovetSolution1@gmail.com • <strong>Services:</strong> Poultry, Veterinary, Consultant
+  </div>
+</div>
+
+</body>
+</html>

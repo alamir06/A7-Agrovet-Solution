@@ -1,0 +1,240 @@
+:root {
+  --navy:          #143C78;
+  --navy-dark:     #142864;
+  --green:         #50A014;
+  --green-light:   #F0F9EB;
+  --lime:          #78B428;
+  --orange:        #E65100;
+  --dark:          #0F172A;
+  --muted:         #64748B;
+  --bg:            #F1F5F9;
+  --card-bg:       #FFFFFF;
+  --border:        #E2E8F0;
+  --shadow:        0 4px 16px -2px rgba(20, 60, 120, 0.09);
+}
+
+/* ─── Reset & Base ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Ebrima', 'Nyala', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 16px 12px 32px;
+}
+
+/* ─── Mobile Container ───────────────────────────────────────────── */
+.mobile-container {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ─── Brand Header ────────────────────────────────────────────────── */
+.brand-header {
+  background: linear-gradient(145deg, var(--navy), var(--navy-dark));
+  border-radius: 24px;
+  padding: 28px 20px 22px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 28px -5px rgba(20, 60, 120, 0.38);
+  border-bottom: 4px solid var(--green);
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-header::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120,180,40,0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.logo-wrapper {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  padding: 4px;
+  background: white;
+  border: 3px solid var(--lime);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+
+.brand-logo {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  margin-bottom: 8px;
+}
+
+.brand-motto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green);
+  color: white;
+  padding: 5px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(80,160,20,0.3);
+}
+
+.motto-amharic {
+  font-family: 'Nyala', 'Ebrima', serif;
+  font-size: 13px;
+}
+.motto-divider  { opacity: 0.6; }
+.motto-english  { font-size: 11px; opacity: 0.95; }
+.brand-tagline  { font-size: 11px; opacity: 0.82; font-weight: 500; }
+
+/* ─── Welcome Box ─────────────────────────────────────────────────── */
+.welcome-box {
+  background: white;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green);
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+}
+.welcome-box h2 {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.welcome-box p {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ─── Channel Cards ───────────────────────────────────────────────── */
+.channels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.loading-state {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 20px;
+}
+
+.channel-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+.channel-card:active {
+  transform: scale(0.983);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.channel-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-bubble {
+  width: 46px; height: 46px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+}
+.icon-bubble svg {
+  width: 23px; height: 23px;
+}
+
+.channel-name   { font-size: 13.5px; font-weight: 700; color: var(--dark); }
+.channel-handle { font-size: 11px;   color: var(--muted); }
+
+/* ─── Action Buttons ──────────────────────────────────────────────── */
+.action-btn {
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity 0.15s, transform 0.1s;
+  font-family: inherit;
+}
+.action-btn:active { transform: scale(0.94); opacity: 0.88; }
+.action-btn .arrow { width: 14px; height: 14px; }
+
+/* ─── Footer ──────────────────────────────────────────────────────── */
+.portal-footer {
+  text-align: center;
+  padding: 14px 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid var(--border);
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--navy);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+.contact-pill a { color: inherit; text-decoration: none; }
+
+.copyright {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.motto-tag {
+  font-family: 'Nyala', 'Ebrima', serif;
+  color: var(--green);
+  font-weight: 700;
+}
