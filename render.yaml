@@ -7,7 +7,7 @@ services:
     runtime: node
     rootDir: a7-qr-code          # project lives in this subfolder of the main repo
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node server/index.js
     plan: free
     envVars:
       - key: NODE_ENV
