@@ -1,0 +1,3 @@
+[submodule "a7-qr-code"]
+	path = a7-qr-code
+	url = https://github.com/alamir06/-a7-qr-code.git
